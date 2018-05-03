@@ -24,3 +24,29 @@ Content-Type: application/json
     "Password" : "123",
     "Adress" : "ABCasfafs 1223"
 }
+
+
+
+
+GET http://localhost:61690/api/Package/GetAll
+
+GET http://localhost:61690/api/Package/Get/2
+
+POST http://localhost:61690/api/Package/Add
+Content-Type: application/json
+
+{
+    "State" : "InMagazine",
+    "Time" : "13:20:00"
+}
+
+DELETE http://localhost:61690/api/Package/2
+
+PUT http://localhost:61690/api/Package/1
+Content-Type: application/json
+
+{
+    "Id" : 1,
+    "State" : "Delivered",
+    "Time" : "12:00:00"
+}
