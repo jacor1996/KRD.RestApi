@@ -1,0 +1,26 @@
+GET http://localhost:61690/api/User/GetAll
+
+GET http://localhost:61690/api/User/Get/2
+
+POST http://localhost:61690/api/User/Add
+Content-Type: application/json
+
+{
+    "Name" : "SADteafa",
+    "Surname" : "axasSAassaSDde",
+    "Password" : "123",
+    "Adress" : "ABCassafafs 1223"
+}
+
+DELETE http://localhost:61690/api/User/2
+
+PUT http://localhost:61690/api/User/1
+Content-Type: application/json
+
+{
+    "Id" : 1,
+    "Name" : "Put",
+    "Surname" : "SAassaSDde",
+    "Password" : "123",
+    "Adress" : "ABCasfafs 1223"
+}
