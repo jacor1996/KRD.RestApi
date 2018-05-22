@@ -5,14 +5,14 @@ using Common.Entities;
 
 namespace Infrastructure.Repositories.Interfaces
 {
-    public interface IUserRepository
+    public interface IUserRepository : IRepository<User>
     {
         void AddUser(User user);
 
         void DeleteUser(int id);
 
-        User FindUser(int id);
+        //User FindUser(int id);
 
-        IEnumerable<User> GetUsers();
+        //IEnumerable<User> GetUsers();
     }
 }

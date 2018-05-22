@@ -8,22 +8,24 @@ using Infrastructure.Repositories.Interfaces;
 
 namespace Infrastructure.Repositories
 {
-    public class PackageRepository : IPackageRepository
+    public class PackageRepository : Repository<Package>, IPackageRepository
     {
-        private DataContext _context;
 
-        public PackageRepository(DataContext context)
+        public PackageRepository(DataContext context) : base(context)
         {
-            _context = context;
+            if (context == null)
+            {
+                throw new ArgumentNullException();
+            }
         }
 
         public void AddPackage(Package package)
         {
-            Package _package = FindPackage(package.Id);
+            Package _package = GetById(package.Id);
 
             if (_package == null)
             {
-                _context.Packages.Add(package);
+                Context.Packages.Add(package);
             }
 
             else
@@ -32,28 +34,18 @@ namespace Infrastructure.Repositories
                 _package.Time = package.Time;
             }
 
-            _context.SaveChanges();
-        }
-
-        public Package FindPackage(int id)
-        {
-            return _context.Packages.FirstOrDefault(p => p.Id == id);
+            Context.SaveChanges();
         }
 
         public void DeletePackage(int id)
         {
-            Package package = FindPackage(id);
+            Package package = GetById(id);
 
             if (package != null)
             {
-                _context.Packages.Remove(package);
-                _context.SaveChanges();
+                Context.Packages.Remove(package);
+                Context.SaveChanges();
             }
-        }
-
-        public IEnumerable<Package> GetPackages()
-        {
-            return _context.Packages;
         }
     }
 }

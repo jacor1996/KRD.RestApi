@@ -10,6 +10,9 @@ using Infrastructure.DataAccess;
 using Infrastructure.Repositories;
 using Infrastructure.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Common.Entities;
+using Infrastructure.Services;
+using Infrastructure.Services.Interfaces;
 
 namespace WebApplication
 {
@@ -34,8 +37,13 @@ namespace WebApplication
                         )
             );
 
+            services.AddScoped<IRepository<User>, Repository<User>>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRepository<Package>, Repository<Package>>();
             services.AddScoped<IPackageRepository, PackageRepository>();
+
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IPackageService, PackageService>();
 
         }
 

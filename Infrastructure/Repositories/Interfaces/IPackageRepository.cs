@@ -5,14 +5,14 @@ using Common.Entities;
 
 namespace Infrastructure.Repositories.Interfaces
 {
-    public interface IPackageRepository
+    public interface IPackageRepository : IRepository<Package>
     {
         void AddPackage(Package package);
 
-        Package FindPackage(int id);
+        //Package FindPackage(int id);
 
         void DeletePackage(int id);
 
-        IEnumerable<Package> GetPackages();
+        //IEnumerable<Package> GetPackages();
     }
 }

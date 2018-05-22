@@ -8,22 +8,24 @@ using Infrastructure.Repositories.Interfaces;
 
 namespace Infrastructure.Repositories
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : Repository<User>, IUserRepository
     {
-        private DataContext _context;
 
-        public UserRepository(DataContext context)
+        public UserRepository(DataContext context) : base(context)
         {
-            _context = context;
+            if (context == null)
+            {
+                throw new ArgumentNullException();
+            }
         }
 
         public void AddUser(User user)
         {
-            User _user = FindUser(user.Id);
+            User _user = GetById(user.Id);
 
             if (_user == null)
             {
-                _context.Users.Add(user);
+                Context.Users.Add(user);
             }
 
             else
@@ -34,28 +36,30 @@ namespace Infrastructure.Repositories
                 _user.Surname = user.Surname;
             }
 
-            _context.SaveChanges();
+            Context.SaveChanges();
         }
 
         public void DeleteUser(int id)
         {
-            User userToDelete = FindUser(id);
+            User userToDelete = GetById(id);
             if (userToDelete != null)
             {
-                _context.Users.Remove(userToDelete);
+                Context.Users.Remove(userToDelete);
+                Context.SaveChanges();
             }
 
-            _context.SaveChanges();
+            
         }
 
-        public User FindUser(int id)
-        {
-            return _context.Users.FirstOrDefault(u => u.Id == id);
-        }
+        //public User FindUser(int id)
+        //{
+        //    return _context.Users.FirstOrDefault(u => u.Id == id);
+        //}
 
-        public IEnumerable<User> GetUsers()
-        {
-            return _context.Users;
-        }
+        //public IEnumerable<User> GetUsers()
+        //{
+        //    return _context.Users;
+        //}
+        
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Common.Entities;
 using Infrastructure.Repositories.Interfaces;
+using Infrastructure.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,18 +14,18 @@ namespace WebApplication.Controllers
     [Route("api/Package")]
     public class PackageController : Controller
     {
-        private IPackageRepository _packageRepository;
+        private IPackageService _packageService;
 
-        public PackageController(IPackageRepository packageRepository)
+        public PackageController(IPackageService packageService)
         {
-            _packageRepository = packageRepository;
+            _packageService = packageService;
         }
 
         [HttpGet]
         [Route("[action]")]
         public IActionResult GetAll()
         {
-            var packages = _packageRepository.GetPackages();
+            var packages = _packageService.GetAll();
             return Ok(new {_packages = packages});
         }
 
@@ -32,7 +33,7 @@ namespace WebApplication.Controllers
         [Route("[action]/{id}")]
         public IActionResult Get(int id)
         {
-            Package package = _packageRepository.FindPackage(id);
+            Package package = _packageService.Get(id);
 
             if (package == null)
             {
@@ -46,7 +47,7 @@ namespace WebApplication.Controllers
         [Route("[action]")]
         public IActionResult Add([FromBody] Package package)
         {
-            _packageRepository.AddPackage(package);
+            _packageService.Add(package);
 
             return Ok();
         }
@@ -59,25 +60,25 @@ namespace WebApplication.Controllers
                 return BadRequest();
             }
 
-            Package _package = _packageRepository.FindPackage(id);
+            Package _package = _packageService.Get(id);
 
             if (_package == null)
             {
                 return NotFound();
             }
 
-            _packageRepository.AddPackage(package);
+            _packageService.Add(package);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            Package _package = _packageRepository.FindPackage(id);
+            Package _package = _packageService.Get(id);
 
             if (_package != null)
             {
-                _packageRepository.DeletePackage(id);
+                _packageService.Delete(_package);
             }
 
             return Ok();
