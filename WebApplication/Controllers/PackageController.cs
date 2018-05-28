@@ -26,7 +26,8 @@ namespace WebApplication.Controllers
         public IActionResult GetAll()
         {
             var packages = _packageService.GetAll();
-            return Ok(new {_packages = packages});
+            //return Ok(new {_packages = packages});
+            return Json(packages);
         }
 
         [HttpGet]

@@ -27,7 +27,8 @@ namespace WebApplication.Controllers
         {
             var _users = _userService.GetAll();
 
-            return Ok(new { users = _users });
+            //return Ok(new { users = _users });
+            return Json(_users);
         }
 
         [HttpGet]
