@@ -30,10 +30,7 @@ namespace Infrastructure.Services
         {
             Package packageToAdd = _repository.GetById(package.Id);
 
-            if (packageToAdd == null)
-            {
-                _repository.AddPackage(package);
-            }
+            _repository.AddPackage(package);
         }
 
         public void Delete(Package package)
