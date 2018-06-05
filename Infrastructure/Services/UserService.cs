@@ -19,10 +19,8 @@ namespace Infrastructure.Services
         public void Add(User user)
         {
             User userToAdd = _repository.GetById(user.Id);
-            if (userToAdd == null)
-            {
-                _repository.AddUser(user);
-            }
+            _repository.AddUser(user);
+
         }
 
         public void Delete(User user)
